@@ -5,7 +5,11 @@ import { BookingModel } from "./booking.model";
 const Createbooking = async (booking: Booking) => {
 
   console.log(booking);
-  const result = await BookingModel.create(booking);
+  let result = await BookingModel.create(booking);
+ 
+  result = await result.populate({ path: 'customer',select: '_id name email phone address'}); 
+  result = await result.populate('service'); 
+  result = await result.populate('slot'); 
   return result;
 
 };
