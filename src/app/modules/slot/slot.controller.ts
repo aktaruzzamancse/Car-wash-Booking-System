@@ -90,9 +90,52 @@ const getTimeFormat = (totalTime: number,currentSlot:number,duration:number):obj
   
   const startTotalTimeCal =  (((totalTime+duration*currentSlot)-duration)/60).toFixed(2);
   const endTotalTimeCal =  ((totalTime+duration*currentSlot)/60).toFixed(2);
-  const slottim = {startTime:startTotalTimeCal, endTime:endTotalTimeCal}
-  return slottim;
+
+  const startTimeArray = startTotalTimeCal.split('.');
+  const endTimeArray = endTotalTimeCal.split('.');
+
+  let startTime = startTimeArray[1];
+  let endTime = endTimeArray[1];
+
+  if(startTimeArray[0].length == 1){
+    startTime = '0'+startTimeArray[0]+':'+startTime;
+  }else {
+    startTime = startTimeArray[0]+':'+startTime;
+  }
+
+  if(endTimeArray[0].length == 1){
+    endTime = '0'+endTimeArray[0]+':'+endTime;
+  }else {
+    endTime = endTimeArray[0]+':'+endTime;
+  }
+
+  const slottime = {startTime:startTime, endTime:endTime}
+  return slottime;
 }
+const getAllSlots = async (req: Request, res: Response) => {
+  try {
+    const result = await SlotService.getAllSlots(
+      req.query?.date ? req.query.date : null,
+      req.query?.serviceId ? req.query.serviceId : null
+    );
+
+    res.status(200).json({
+      success: true,
+      massage: "Services fetched successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      massage: "Services data not found",
+      error: {
+        code: 404,
+        description: "Services data not found!",
+      },
+    });
+  }
+};
 export const SlotControllers = {
-  createSlot
+  createSlot,
+  getAllSlots
 };

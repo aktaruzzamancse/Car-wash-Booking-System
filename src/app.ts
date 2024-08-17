@@ -12,5 +12,5 @@ app.use(cors());
 //Application Routes
 app.use("/api/auth", UserRouters);
 app.use("/api/services", ServiceRouters);
-app.use("/api/services/slots", SlotRouters);
+app.use("/api/", SlotRouters);
 export default app;
