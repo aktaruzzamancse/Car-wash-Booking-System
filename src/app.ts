@@ -3,6 +3,7 @@ import cors from "cors";
 import { UserRouters } from "./app/modules/user/user.route";
 import { ServiceRouters } from "./app/modules/service/service.route";
 import { SlotRouters } from "./app/modules/slot/slot.route";
+import { BookingRouters } from "./app/modules/booking/booking.route";
 const app: Application = express();
 
 //parsers
@@ -13,4 +14,5 @@ app.use(cors());
 app.use("/api/auth", UserRouters);
 app.use("/api/services", ServiceRouters);
 app.use("/api/", SlotRouters);
+app.use("/api/", BookingRouters);
 export default app;
