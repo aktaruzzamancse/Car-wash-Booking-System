@@ -33,32 +33,7 @@ const createBooking = async (req: Request, res: Response) => {
     });
   }
 };
-const getTimeFormat = (totalTime: number,currentBooking:number,duration:number):object => {
-  
-  const startTotalTimeCal =  (((totalTime+duration*currentBooking)-duration)/60).toFixed(2);
-  const endTotalTimeCal =  ((totalTime+duration*currentBooking)/60).toFixed(2);
 
-  const startTimeArray = startTotalTimeCal.split('.');
-  const endTimeArray = endTotalTimeCal.split('.');
-
-  let startTime = startTimeArray[1];
-  let endTime = endTimeArray[1];
-
-  if(startTimeArray[0].length == 1){
-    startTime = '0'+startTimeArray[0]+':'+startTime;
-  }else {
-    startTime = startTimeArray[0]+':'+startTime;
-  }
-
-  if(endTimeArray[0].length == 1){
-    endTime = '0'+endTimeArray[0]+':'+endTime;
-  }else {
-    endTime = endTimeArray[0]+':'+endTime;
-  }
-
-  const bookingtime = {startTime:startTime, endTime:endTime}
-  return bookingtime;
-}
 const getAllBookings = async (req: Request, res: Response) => {
   try {
     const result = await BookingService.getAllBookings();
@@ -79,7 +54,31 @@ const getAllBookings = async (req: Request, res: Response) => {
     });
   }
 };
+const getSingleBooking = async (req: Request, res: Response) => {
+  try {
+    const userId = "66b9b2bf7cc877cb144359fc";
+    //Calling getSingleService Service
+    const result = await BookingService.getSingleBooking(userId);
+
+    //send response
+    res.status(200).json({
+      success: true,
+      massage: "User bookings retrieved successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      massage: "bookings not found",
+      error: {
+        code: 404,
+        description: "bookings not found!",
+      },
+    });
+  }
+};
 export const BookingControllers = {
   createBooking,
-  getAllBookings
+  getAllBookings,
+  getSingleBooking
 };

@@ -44,7 +44,14 @@ const getAllBookings  = async () => {
   let result = await BookingModel.find().populate({ path: 'customer',select: '_id name email phone address'}).populate('service').populate('slot'); 
   return result;
 };
+const getSingleBooking  = async (userId: string) => {
+  let result = await BookingModel.findOne({
+    customer: userId,
+  }).populate('service').populate('slot'); 
+  return result;
+};
 export const BookingService = {
   Createbooking,
-  getAllBookings
+  getAllBookings,
+  getSingleBooking
 };
