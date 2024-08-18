@@ -5,6 +5,8 @@ import { ServiceRouters } from "./app/modules/service/service.route";
 import { SlotRouters } from "./app/modules/slot/slot.route";
 import { BookingRouters } from "./app/modules/booking/booking.route";
 import notFound from "./app/middlewares/notFound";
+import globalErrorHandler from './app/middlewares/globalErrorhandler';
+
 const app: Application = express();
 
 //parsers
@@ -17,6 +19,8 @@ app.use("/api/services", ServiceRouters);
 app.use("/api/", SlotRouters);
 app.use("/api/", BookingRouters);
 
+//globalErrorHandler
+app.use(globalErrorHandler);
 //Not Found
 app.use(notFound);
 

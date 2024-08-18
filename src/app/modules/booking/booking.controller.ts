@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { BookingService } from "./booking.service";
 import BookingVaildationSchema from "./booking.zod.validation";
 
-const createBooking = async (req: Request, res: Response) => {
+const createBooking = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const Booking = req.body;
     //Service vaildation using Zod
@@ -23,18 +23,19 @@ const createBooking = async (req: Request, res: Response) => {
     });
     
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      massage: "Faild to create Booking!",
-      error: {
-        code: 404,
-        description: error,
-      },
-    });
+    // res.status(500).json({
+    //   success: false,
+    //   massage: "Faild to create Booking!",
+    //   error: {
+    //     code: 404,
+    //     description: error,
+    //   },
+    // });
+    next(error)
   }
 };
 
-const getAllBookings = async (req: Request, res: Response) => {
+const getAllBookings = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await BookingService.getAllBookings();
 
@@ -44,17 +45,18 @@ const getAllBookings = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      massage: "Services data not found",
-      error: {
-        code: 404,
-        description: "Services data not found!",
-      },
-    });
+    // res.status(500).json({
+    //   success: false,
+    //   massage: "Services data not found",
+    //   error: {
+    //     code: 404,
+    //     description: "Services data not found!",
+    //   },
+    // });
+    next(error);
   }
 };
-const getSingleBooking = async (req: Request, res: Response) => {
+const getSingleBooking = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = "66b9b2bf7cc877cb144359fc";
     //Calling getSingleService Service
@@ -67,14 +69,15 @@ const getSingleBooking = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      massage: "bookings not found",
-      error: {
-        code: 404,
-        description: "bookings not found!",
-      },
-    });
+    // res.status(500).json({
+    //   success: false,
+    //   massage: "bookings not found",
+    //   error: {
+    //     code: 404,
+    //     description: "bookings not found!",
+    //   },
+    // });
+    next(error)
   }
 };
 export const BookingControllers = {

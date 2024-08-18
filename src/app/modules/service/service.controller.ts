@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { ServiceServices } from "./service.service";
 import ServiceVaildationSchema from "./service.zod.validation";
 
-const createService = async (req: Request, res: Response) => {
+const createService = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const Service = req.body;
     //Service vaildation using Zod
@@ -20,17 +20,18 @@ const createService = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      massage: "Faild to create Service!",
-      error: {
-        code: 404,
-        description: error,
-      },
-    });
+    // res.status(500).json({
+    //   success: false,
+    //   massage: "Faild to create Service!",
+    //   error: {
+    //     code: 404,
+    //     description: error,
+    //   },
+    // });
+    next(error);
   }
 };
-const getAllServices = async (req: Request, res: Response) => {
+const getAllServices = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await ServiceServices.getAllServices();
 
@@ -40,17 +41,18 @@ const getAllServices = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      massage: "Services data not found",
-      error: {
-        code: 404,
-        description: "Services data not found!",
-      },
-    });
+    // res.status(500).json({
+    //   success: false,
+    //   massage: "Services data not found",
+    //   error: {
+    //     code: 404,
+    //     description: "Services data not found!",
+    //   },
+    // });
+    next(error);
   }
 };
-const getSingleService = async (req: Request, res: Response) => {
+const getSingleService = async (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log('ServiceId ',req.params.ServiceId);
     const ServiceId = req.params.ServiceId;
@@ -65,18 +67,19 @@ const getSingleService = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      massage: "Service not found",
-      error: {
-        code: 404,
-        description: "Service not found!",
-      },
-    });
+    // res.status(500).json({
+    //   success: false,
+    //   massage: "Service not found",
+    //   error: {
+    //     code: 404,
+    //     description: "Service not found!",
+    //   },
+    // });
+    next(error)
   }
 };
 
-const deleteSingleService = async (req: Request, res: Response) => {
+const deleteSingleService = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const ServiceId = parseInt(req.params.ServiceId);
 
@@ -90,18 +93,19 @@ const deleteSingleService = async (req: Request, res: Response) => {
       data: null,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      massage: "Service not found",
-      error: {
-        code: 404,
-        description: "Service not found!",
-      },
-    });
+    // res.status(500).json({
+    //   success: false,
+    //   massage: "Service not found",
+    //   error: {
+    //     code: 404,
+    //     description: "Service not found!",
+    //   },
+    // });
+    next(error);
   }
 };
 
-const updateService = async (req: Request, res: Response) => {
+const updateService = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const Service = req.body;
     //Service vaildation using Zod
@@ -126,14 +130,15 @@ const updateService = async (req: Request, res: Response) => {
       data: ServiceResult,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      massage: "Service not found",
-      error: {
-        code: 404,
-        description: "Service not found!",
-      },
-    });
+    // res.status(500).json({
+    //   success: false,
+    //   massage: "Service not found",
+    //   error: {
+    //     code: 404,
+    //     description: "Service not found!",
+    //   },
+    // });
+    next(error)
   }
 };
 

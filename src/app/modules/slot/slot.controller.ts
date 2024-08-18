@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { SlotService } from "./slot.service";
 import SlotVaildationSchema from "./slot.zod.validation";
 import { ServiceModel } from "../service/service.model";
 
-const createSlot = async (req: Request, res: Response) => {
+const createSlot = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const Slot = req.body;
     //Slot vaildation using Zod
@@ -76,14 +76,15 @@ const createSlot = async (req: Request, res: Response) => {
 
     
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      massage: "Faild to create Slot!",
-      error: {
-        code: 404,
-        description: error,
-      },
-    });
+    // res.status(500).json({
+    //   success: false,
+    //   massage: "Faild to create Slot!",
+    //   error: {
+    //     code: 404,
+    //     description: error,
+    //   },
+    // });
+    next(error)
   }
 };
 const getTimeFormat = (totalTime: number,currentSlot:number,duration:number):object => {
@@ -112,7 +113,7 @@ const getTimeFormat = (totalTime: number,currentSlot:number,duration:number):obj
   const slottime = {startTime:startTime, endTime:endTime}
   return slottime;
 }
-const getAllSlots = async (req: Request, res: Response) => {
+const getAllSlots = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await SlotService.getAllSlots(
       req.query?.date ? req.query.date : null,
@@ -125,14 +126,15 @@ const getAllSlots = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      massage: "Services data not found",
-      error: {
-        code: 404,
-        description: "Services data not found!",
-      },
-    });
+    // res.status(500).json({
+    //   success: false,
+    //   massage: "Services data not found",
+    //   error: {
+    //     code: 404,
+    //     description: "Services data not found!",
+    //   },
+    // });
+    next(error);
   }
 };
 export const SlotControllers = {
