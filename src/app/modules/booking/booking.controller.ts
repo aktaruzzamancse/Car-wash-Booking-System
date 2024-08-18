@@ -1,18 +1,16 @@
 import { Request, Response } from "express";
 import { BookingService } from "./booking.service";
 import BookingVaildationSchema from "./booking.zod.validation";
-import { ServiceModel } from "../service/service.model";
 
 const createBooking = async (req: Request, res: Response) => {
   try {
     const Booking = req.body;
     //Service vaildation using Zod
-
      const zodParseData = BookingVaildationSchema.parse(Booking);
      zodParseData.customer = Booking.customerId;
      zodParseData.service = Booking.serviceId;
      zodParseData.slot = Booking.slotId;
-    // console.log('zodParseData ',zodParseData);
+    //  console.log('zodParseData ',zodParseData);
     //Calling CreateService Service
     const result = await BookingService.Createbooking(zodParseData);
 
