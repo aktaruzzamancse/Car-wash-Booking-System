@@ -61,10 +61,7 @@ const getTimeFormat = (totalTime: number,currentBooking:number,duration:number):
 }
 const getAllBookings = async (req: Request, res: Response) => {
   try {
-    const result = await BookingService.getAllBookings(
-      req.query?.date ? req.query.date : null,
-      req.query?.serviceId ? req.query.serviceId : null
-    );
+    const result = await BookingService.getAllBookings();
 
     res.status(200).json({
       success: true,

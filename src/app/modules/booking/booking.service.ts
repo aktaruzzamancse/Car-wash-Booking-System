@@ -31,7 +31,7 @@ const Createbooking = async (booking: Booking) => {
   await session.endSession();
 
   return result;
-  
+
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
@@ -40,36 +40,9 @@ const Createbooking = async (booking: Booking) => {
   
 
 };
-const getAllBookings  = async (date: any,serviceId: any) => {
-  if (date != null && serviceId != null) {
-    console.log(date);
-    const dateRegex = new RegExp(date, "i");
-    const serviceIdRegex = new RegExp(serviceId, "i");
-    const result = await BookingModel.find({
-      date: dateRegex,
-      service: serviceIdRegex,
-      isDeleted: false,
-    });
-    return result;
-  } else if (date != null || serviceId != null) {
-    const dateRegex = new RegExp(date, "i");
-    const serviceIdRegex = new RegExp(serviceId, "i");
-    const filter = {
-      isDeleted: false
-    };
-    if(date != null){
-      filter.date = dateRegex;
-    }
-    if(serviceId != null){
-      filter.service = serviceIdRegex;
-    }
-    const result = await BookingModel.find(filter);
-    return result;
-  }
-  else {
-    const result = await BookingModel.find({ isDeleted: false });
-    return result;
-  }
+const getAllBookings  = async () => {
+  let result = await BookingModel.find().populate({ path: 'customer',select: '_id name email phone address'}).populate('service').populate('slot'); 
+  return result;
 };
 export const BookingService = {
   Createbooking,
