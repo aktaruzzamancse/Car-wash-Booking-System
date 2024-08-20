@@ -7,9 +7,9 @@ const router = express.Router();
 
 //ServiceCreate Controller func
 
-router.post("/", ServiceControllers.createService);
-router.get("/",auth(USER_ROLE.user), ServiceControllers.getAllServices);
+router.post("/",auth(USER_ROLE.admin), ServiceControllers.createService);
+router.get("/", ServiceControllers.getAllServices);
 router.get("/:ServiceId", ServiceControllers.getSingleService);
-router.delete("/:ServiceId", ServiceControllers.deleteSingleService);
-router.put("/:ServiceId", ServiceControllers.updateService);
+router.delete("/:ServiceId",auth(USER_ROLE.admin), ServiceControllers.deleteSingleService);
+router.put("/:ServiceId",auth(USER_ROLE.admin), ServiceControllers.updateService);
 export const ServiceRouters = router;
