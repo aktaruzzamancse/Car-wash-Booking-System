@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { SlotService } from "./slot.service";
 import SlotVaildationSchema from "./slot.zod.validation";
 import { ServiceModel } from "../service/service.model";
+import sendResponse from '../../utils/sendResponse';
+import httpStatus from 'http-status';
 
 const createSlot = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -63,27 +65,14 @@ const createSlot = async (req: Request, res: Response, next: NextFunction) => {
 
       }
       const resultf = await SlotService.Createslot(dataObj);
-      res.status(200).json({
+      sendResponse(res, {
+        statusCode: httpStatus.OK,
         success: true,
-        massage: "Slot created successfully!",
+        message: 'Slots created successfully',
         data: resultf,
       });
     }
-
-
-   
-    //send response
-
-    
   } catch (error) {
-    // res.status(500).json({
-    //   success: false,
-    //   massage: "Faild to create Slot!",
-    //   error: {
-    //     code: 404,
-    //     description: error,
-    //   },
-    // });
     next(error)
   }
 };
@@ -119,21 +108,13 @@ const getAllSlots = async (req: Request, res: Response, next: NextFunction) => {
       req.query?.date ? req.query.date : null,
       req.query?.serviceId ? req.query.serviceId : null
     );
-
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      massage: "Services fetched successfully!",
+      message: 'Available slots retrieved successfully',
       data: result,
     });
   } catch (error) {
-    // res.status(500).json({
-    //   success: false,
-    //   massage: "Services data not found",
-    //   error: {
-    //     code: 404,
-    //     description: "Services data not found!",
-    //   },
-    // });
     next(error);
   }
 };

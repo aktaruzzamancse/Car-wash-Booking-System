@@ -1,6 +1,8 @@
-import { Schema, model, connect } from "mongoose";
+/* eslint-disable no-unused-vars */
+import {  Model } from "mongoose";
+import { USER_ROLE } from "./user.constant";
 
-export type User = {
+export interface User {
   name: string;
   password: string;
   email: string;
@@ -9,3 +11,15 @@ export type User = {
   address: string;
   isDeleted: boolean;
 };
+export interface UserModelT extends Model<User> {
+  
+  //Exiting User checking
+  isUserExistsByCustomEmail(email: string): Promise<User>;
+
+  //instance methods for checking if passwords are matched
+  isPasswordMatched(
+    plainTextPassword: string,
+    hashedPassword: string,
+  ): Promise<boolean>;
+}
+export type TUserRole = keyof typeof USER_ROLE;

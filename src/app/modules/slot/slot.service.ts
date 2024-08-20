@@ -17,13 +17,15 @@ const getAllSlots  = async (date: any,serviceId: any) => {
       date: dateRegex,
       service: serviceIdRegex,
       isDeleted: false,
+      isBooked: 'available'
     });
     return result;
   } else if (date != null || serviceId != null) {
     const dateRegex = new RegExp(date, "i");
     const serviceIdRegex = new RegExp(serviceId, "i");
     const filter = {
-      isDeleted: false
+      isDeleted: false,
+      isBooked: 'available'
     };
     if(date != null){
       filter.date = dateRegex;
@@ -35,7 +37,7 @@ const getAllSlots  = async (date: any,serviceId: any) => {
     return result;
   }
   else {
-    const result = await SlotModel.find({ isDeleted: false });
+    const result = await SlotModel.find({ isDeleted: false , isBooked: 'available'});
     return result;
   }
 };

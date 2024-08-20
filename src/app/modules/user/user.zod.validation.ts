@@ -1,5 +1,5 @@
 import { z } from "zod";
-const userType = ["admin", "user"];
+const userType = ['admin', 'user'] as const;
 
 const userVaildationSchema = z.object({
   name:  z.string({
@@ -13,7 +13,9 @@ const userVaildationSchema = z.object({
     })
     .max(20),
   email: z.string().email({ message: "Invalid email address" }),
+  role:z.enum(userType),
   phone: z.string(),
+
   address: z.string(),
   isDeleted: z.boolean().default(false),
 });

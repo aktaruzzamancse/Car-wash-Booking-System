@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { ServiceServices } from "./service.service";
 import ServiceVaildationSchema from "./service.zod.validation";
+import sendResponse from '../../utils/sendResponse';
+import httpStatus from 'http-status';
 
 const createService = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -13,42 +15,27 @@ const createService = async (req: Request, res: Response, next: NextFunction) =>
     const result = await ServiceServices.Createservice(zodParseData);
 
     //send response
-
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      massage: "Service created successfully!",
+      message: 'Service created successfully',
       data: result,
     });
   } catch (error) {
-    // res.status(500).json({
-    //   success: false,
-    //   massage: "Faild to create Service!",
-    //   error: {
-    //     code: 404,
-    //     description: error,
-    //   },
-    // });
     next(error);
   }
 };
 const getAllServices = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    console.log(req.user);
     const result = await ServiceServices.getAllServices();
-
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      massage: "Services fetched successfully!",
+      message: 'Services retrieved successfully',
       data: result,
     });
   } catch (error) {
-    // res.status(500).json({
-    //   success: false,
-    //   massage: "Services data not found",
-    //   error: {
-    //     code: 404,
-    //     description: "Services data not found!",
-    //   },
-    // });
     next(error);
   }
 };
@@ -61,20 +48,13 @@ const getSingleService = async (req: Request, res: Response, next: NextFunction)
     const result = await ServiceServices.getSingleService(ServiceId);
 
     //send response
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      massage: "Service fetched successfully!",
+      message: 'Service retrieved successfully',
       data: result,
     });
   } catch (error) {
-    // res.status(500).json({
-    //   success: false,
-    //   massage: "Service not found",
-    //   error: {
-    //     code: 404,
-    //     description: "Service not found!",
-    //   },
-    // });
     next(error)
   }
 };
@@ -87,20 +67,13 @@ const deleteSingleService = async (req: Request, res: Response, next: NextFuncti
     const result = await ServiceServices.deleteSingleService(ServiceId);
 
     //send response
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      massage: "Service deleted successfully!",
-      data: null,
+      message: 'Service deleted successfully',
+      data: result,
     });
   } catch (error) {
-    // res.status(500).json({
-    //   success: false,
-    //   massage: "Service not found",
-    //   error: {
-    //     code: 404,
-    //     description: "Service not found!",
-    //   },
-    // });
     next(error);
   }
 };
@@ -123,21 +96,13 @@ const updateService = async (req: Request, res: Response, next: NextFunction) =>
     //Get a Service data
     const ServiceResult = await ServiceServices.getSingleService(ServiceId);
     //send response
-
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      massage: "Service updated successfully!",
+      message: 'Service updated successfully',
       data: ServiceResult,
     });
   } catch (error) {
-    // res.status(500).json({
-    //   success: false,
-    //   massage: "Service not found",
-    //   error: {
-    //     code: 404,
-    //     description: "Service not found!",
-    //   },
-    // });
     next(error)
   }
 };

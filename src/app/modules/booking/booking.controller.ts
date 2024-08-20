@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { BookingService } from "./booking.service";
 import BookingVaildationSchema from "./booking.zod.validation";
+import sendResponse from '../../utils/sendResponse';
+import httpStatus from 'http-status';
 
 const createBooking = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -15,22 +17,14 @@ const createBooking = async (req: Request, res: Response, next: NextFunction) =>
     const result = await BookingService.Createbooking(zodParseData);
 
     //send response
-
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      massage: "Booking created successfully!",
+      message: 'Booking successful',
       data: result,
     });
     
   } catch (error) {
-    // res.status(500).json({
-    //   success: false,
-    //   massage: "Faild to create Booking!",
-    //   error: {
-    //     code: 404,
-    //     description: error,
-    //   },
-    // });
     next(error)
   }
 };
@@ -45,14 +39,6 @@ const getAllBookings = async (req: Request, res: Response, next: NextFunction) =
       data: result,
     });
   } catch (error) {
-    // res.status(500).json({
-    //   success: false,
-    //   massage: "Services data not found",
-    //   error: {
-    //     code: 404,
-    //     description: "Services data not found!",
-    //   },
-    // });
     next(error);
   }
 };
@@ -63,20 +49,13 @@ const getSingleBooking = async (req: Request, res: Response, next: NextFunction)
     const result = await BookingService.getSingleBooking(userId);
 
     //send response
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      massage: "User bookings retrieved successfully",
+      message: 'User bookings retrieved successfully',
       data: result,
     });
   } catch (error) {
-    // res.status(500).json({
-    //   success: false,
-    //   massage: "bookings not found",
-    //   error: {
-    //     code: 404,
-    //     description: "bookings not found!",
-    //   },
-    // });
     next(error)
   }
 };
