@@ -1,5 +1,13 @@
 import { z } from "zod";
+
+
+const objectIdRegex = /^[0-9a-fA-F]{24}$/;
+
 const bookingVaildationSchema = z.object({
+  serviceId: z
+  .string()
+  .regex(objectIdRegex, { message: "Invalid service ID" }),
+  slotId: z.string().regex(objectIdRegex, { message: "Invalid slot ID" }),
   vehicleType:z.enum(['car' , 'truck' , 'SUV' , 'van' , 'motorcycle' , 'bus' , 'electricVehicle' , 'hybridVehicle' , 'bicycle' , 'tractor']),
   vehicleBrand:  z.string({
     required_error: "Brand Type is required",

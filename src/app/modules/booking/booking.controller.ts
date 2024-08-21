@@ -10,9 +10,12 @@ const createBooking = async (req: Request, res: Response, next: NextFunction) =>
     const customerId = req.user.userId;
     //Service vaildation using Zod
      const zodParseData = BookingVaildationSchema.parse(Booking);
-     zodParseData.customer = customerId;
-     zodParseData.service = Booking.serviceId;
-     zodParseData.slot = Booking.slotId;
+     if(zodParseData) {
+      zodParseData.customer = customerId;
+      zodParseData.service = Booking.serviceId;
+      zodParseData.slot = Booking.slotId;
+     }
+    
     //  console.log('zodParseData ',zodParseData);
     //Calling CreateService Service
     const result = await BookingService.Createbooking(zodParseData);

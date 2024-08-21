@@ -28,11 +28,9 @@ const deleteSingleService = async (ServiceId: string) => {
 };
 
 const updateSingleService = async (ServiceId: string, Service: Service) => {
-
   const result = await ServiceModel.findOneAndUpdate({_id: ServiceId }, Service,{
     new: true
   });
-  console.log(result);
   return result;
 };
 

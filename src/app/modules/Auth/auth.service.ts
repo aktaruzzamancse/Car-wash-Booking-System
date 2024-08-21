@@ -6,6 +6,7 @@ import AppError from '../../errors/AppError';
 import config from '../../config';
 const loginUser = async (payload: TLoginUser) => {
   const user = await UserModel.isUserExistsByCustomEmail(payload.email);
+  console.log(user);
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
   }
@@ -17,14 +18,16 @@ const loginUser = async (payload: TLoginUser) => {
   const jwtPayload = {
     userEmail: user.email,
     role: user.role,
-    userId: user.id,
+    userId: user?.id ,
   };
+  console.log(jwtPayload);
   const accessToken = createToken(
     jwtPayload,
     config.jwt_access_secret as string,
     config.jwt_access_expires_in as string,
   );
   const userData = user;
+
   userData.password = "";
   return {
     accessToken,

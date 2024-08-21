@@ -4,6 +4,8 @@ import SlotVaildationSchema from "./slot.zod.validation";
 import { ServiceModel } from "../service/service.model";
 import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
+import { Slot } from "./slot.interface";
+import { object } from "zod";
 
 const createSlot = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -22,28 +24,9 @@ const createSlot = async (req: Request, res: Response, next: NextFunction) => {
         _id: serviceId,
         isDeleted: false,
       })
-
-      const startTime = zodParseData.startTime;
-      const endTime = zodParseData.endTime;
-      const startTimeArray = startTime.split(':');
-      const endTimeArray = endTime.split(':');
-
-      const convertStartTime = parseInt(startTimeArray[0]*60)+ parseInt(startTimeArray[1]);
-      const convertendTime =parseInt(endTimeArray[0]*60)+ parseInt(endTimeArray[1]);
-      const seviceDuration =  parseInt( convertendTime - convertStartTime);
-      const duration = result?result.duration : 0;
-      const numberOfSlots = parseInt(seviceDuration / duration);
-      const dataObj = [];
-      for (let i = 1; i <= numberOfSlots; i++) {
-        const getSlotTime =  getTimeFormat(convertStartTime,i,duration);
-        
-         const data = {service:serviceId,date:zodParseData.date,startTime:getSlotTime.startTime,endTime:getSlotTime.endTime};
-         
-         dataObj.push(data)
-        
-
-      }
-      const resultf = await SlotService.Createslot(dataObj);
+      const duration = result?.duration as number;
+     
+      const resultf = await SlotService.Createslot(zodParseData,duration );
       sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -55,34 +38,10 @@ const createSlot = async (req: Request, res: Response, next: NextFunction) => {
     next(error)
   }
 };
-const getTimeFormat = (totalTime: number,currentSlot:number,duration:number):object => {
-  
-  const startTotalTimeCal =  (((totalTime+duration*currentSlot)-duration)/60).toFixed(2);
-  const endTotalTimeCal =  ((totalTime+duration*currentSlot)/60).toFixed(2);
 
-  const startTimeArray = startTotalTimeCal.split('.');
-  const endTimeArray = endTotalTimeCal.split('.');
-
-  let startTime = startTimeArray[1];
-  let endTime = endTimeArray[1];
-
-  if(startTimeArray[0].length == 1){
-    startTime = '0'+startTimeArray[0]+':'+startTime;
-  }else {
-    startTime = startTimeArray[0]+':'+startTime;
-  }
-
-  if(endTimeArray[0].length == 1){
-    endTime = '0'+endTimeArray[0]+':'+endTime;
-  }else {
-    endTime = endTimeArray[0]+':'+endTime;
-  }
-
-  const slottime = {startTime:startTime, endTime:endTime}
-  return slottime;
-}
 const getAllSlots = async (req: Request, res: Response, next: NextFunction) => {
   try {
+
     const result = await SlotService.getAllSlots(
       req.query?.date ? req.query.date : null,
       req.query?.serviceId ? req.query.serviceId : null
