@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import httpStatus from 'http-status';
 import { TLoginUser } from './auth.interface';
 import { createToken } from './auth.utils';

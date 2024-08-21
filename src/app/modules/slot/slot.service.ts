@@ -8,7 +8,7 @@ const Createslot = async (slot:[Slot]) => {
   const result = await SlotModel.insertMany(slot);
   return result;
 };
-const getAllSlots  = async (date: any,serviceId: string) => {
+const getAllSlots  = async (date: string,serviceId: string) => {
   if (date != null && serviceId != null) {
     console.log(date);
     console.log(serviceId);

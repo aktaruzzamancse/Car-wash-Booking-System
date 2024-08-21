@@ -33,31 +33,10 @@ const createSlot = async (req: Request, res: Response, next: NextFunction) => {
       const seviceDuration =  parseInt( convertendTime - convertStartTime);
       const duration = result?result.duration : 0;
       const numberOfSlots = parseInt(seviceDuration / duration);
-
-      // console.log('convertStartTime ',convertStartTime);
-      // console.log('convertendTime ',convertendTime);
-      // console.log('get duration ',duration);
-      // console.log('seviceDuration ',seviceDuration);
-      // console.log('numberOfSlots ',numberOfSlots);
-      const slotStartTime = zodParseData.startTime;
-      const slotEndTime = zodParseData.endTime;
       const dataObj = [];
       for (let i = 1; i <= numberOfSlots; i++) {
         const getSlotTime =  getTimeFormat(convertStartTime,i,duration);
         
-        // const slotStartTime = slotStartTimeHours + slotStartTimeMins;
-
-        // console.log('service ',serviceId);
-        // console.log('date ',zodParseData.date);
-        // console.log('slotStartTime ',slotStartTime);
-        // console.log('slotStartTime ',slotStartTime);
-
-        // console.log('convertStartTime ',convertStartTime);
-        // console.log('convertendTime ',convertendTime);
-        // console.log('get duration ',duration);
-        // console.log('seviceDuration ',seviceDuration);
-        // console.log('numberOfSlots ',numberOfSlots);
-
          const data = {service:serviceId,date:zodParseData.date,startTime:getSlotTime.startTime,endTime:getSlotTime.endTime};
          
          dataObj.push(data)
