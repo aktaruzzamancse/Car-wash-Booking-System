@@ -13,7 +13,7 @@ const Createbooking = async (booking: Booking) => {
     session.startTransaction();
  
   // update slot
-  const slotId = booking.slot;
+  const slotId = booking.slotId;
   console.log(slotId);
   const updateSlot = await SlotModel.findByIdAndUpdate(
     slotId,
@@ -29,13 +29,13 @@ const Createbooking = async (booking: Booking) => {
   //create booking
   let result = await BookingModel.create(booking);
   result = await result.populate({ path: 'customer',select: '_id name email phone address'}); 
-  result = await result.populate('service'); 
-  result = await result.populate('slot'); 
+  result = await result.populate('serviceId'); 
+  result = await result.populate('slotId'); 
   
   await session.commitTransaction();
   await session.endSession();
 
-  return result;
+  return getformattedBookings(result,false);
 
   } catch (error) {
     await session.abortTransaction();
@@ -46,15 +46,55 @@ const Createbooking = async (booking: Booking) => {
 
 };
 const getAllBookings  = async () => {
-  const result = await BookingModel.find().populate({ path: 'customer',select: '_id name email phone address'}).populate('service').populate('slot'); 
-  return result;
+  const result = await BookingModel.find().populate({ path: 'customer',select: '_id name email phone address'}).populate('serviceId').populate('slotId'); 
+  return getformattedBookings(result,true);
 };
+const getformattedBookings  = async (result,map) => {
+  console.log(result);
+  if(map) {
+    const formattedBookings = await result.map((booking) => ({
+      _id: booking._id,
+      customer: booking?.customer,
+      service: booking.serviceId,
+      slot: booking.slotId,
+      vehicleType: booking.vehicleType,
+      vehicleBrand: booking.vehicleBrand,
+      vehicleModel: booking.vehicleModel,
+      manufacturingYear: booking.manufacturingYear,
+      registrationPlate: booking.registrationPlate,
+      createdAt: booking.createdAt,
+      updatedAt: booking.updatedAt,
+    }));
+    return formattedBookings;
+  }else {
+    const formattedBookings = {
+      _id: result.id,
+      customer: result?.customer,
+      service: result.serviceId,
+      slot: result.slotId,
+      vehicleType: result.vehicleType,
+      vehicleBrand: result.vehicleBrand,
+      vehicleModel: result.vehicleModel,
+      manufacturingYear: result.manufacturingYear,
+      registrationPlate: result.registrationPlate,
+      createdAt: result.createdAt,
+      updatedAt: result.updatedAt,
+    };
+    return formattedBookings;
+  }
+  
+  
+}
 const getSingleBooking  = async (userId: string) => {
-  const result = await BookingModel.findOne({
+ 
+  const result = await BookingModel.find({
     customer: userId,
-  }).populate({ path: 'customer',select: '_id name email phone address'}).populate('service').populate('slot');
-  return result;
+  }).populate({ path: 'customer',select: '_id name email phone address'}).populate('serviceId').populate('slotId');
+  console.log('userId ',result);
+  return getformattedBookings(result,true);
 };
+
+
 export const BookingService = {
   Createbooking,
   getAllBookings,

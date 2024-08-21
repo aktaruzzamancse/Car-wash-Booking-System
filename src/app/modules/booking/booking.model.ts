@@ -7,12 +7,12 @@ const bookingSchema = new Schema<Booking>({
     required: [true, 'customer id is required'],
     ref: 'User',
   },
-  service: {
+  serviceId: {
     type: Schema.Types.ObjectId,
     required: [true, 'service id is required'],
     ref: 'Service',
   },
-  slot: {
+  slotId: {
     type: Schema.Types.ObjectId,
     required: [true, 'slot id is required'],
     ref: 'Slot',

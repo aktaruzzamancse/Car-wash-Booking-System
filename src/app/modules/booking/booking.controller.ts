@@ -9,17 +9,16 @@ const createBooking = async (req: Request, res: Response, next: NextFunction) =>
     const Booking = req.body;
     const customerId = req.user.userId;
     //Service vaildation using Zod
+    console.log('customerId ',req.user)
+    console.log('customerId ',customerId)
+    
      const zodParseData = BookingVaildationSchema.parse(Booking);
-     if(zodParseData) {
-      zodParseData.customer = customerId;
-      zodParseData.service = Booking.serviceId;
-      zodParseData.slot = Booking.slotId;
-     }
     
     //  console.log('zodParseData ',zodParseData);
     //Calling CreateService Service
-    const result = await BookingService.Createbooking(zodParseData);
-
+    Booking.customer = customerId;
+    const result = await BookingService.Createbooking(Booking);
+    
     //send response
     sendResponse(res, {
       statusCode: httpStatus.OK,
