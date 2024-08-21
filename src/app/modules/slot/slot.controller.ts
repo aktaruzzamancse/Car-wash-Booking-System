@@ -39,9 +39,9 @@ const createSlot = async (req: Request, res: Response, next: NextFunction) => {
       // console.log('get duration ',duration);
       // console.log('seviceDuration ',seviceDuration);
       // console.log('numberOfSlots ',numberOfSlots);
-      var slotStartTime = zodParseData.startTime;
-      var slotEndTime = zodParseData.endTime;
-      let dataObj = [];
+      const slotStartTime = zodParseData.startTime;
+      const slotEndTime = zodParseData.endTime;
+      const dataObj = [];
       for (let i = 1; i <= numberOfSlots; i++) {
         const getSlotTime =  getTimeFormat(convertStartTime,i,duration);
         

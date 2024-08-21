@@ -85,9 +85,8 @@ const updateService = async (req: Request, res: Response, next: NextFunction) =>
     const Service = req.body;
 
     const ServiceId = req.params.ServiceId;
-
     const result = await ServiceServices.updateSingleService(
-      Service?.ServiceId,
+      ServiceId,
       Service
     );
     //send response
