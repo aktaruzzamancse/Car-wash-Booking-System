@@ -49,10 +49,10 @@ const getAllBookings  = async () => {
   const result = await BookingModel.find().populate({ path: 'customer',select: '_id name email phone address'}).populate('serviceId').populate('slotId'); 
   return getformattedBookings(result,true);
 };
-const getformattedBookings  = async (result,map) => {
+const getformattedBookings  = async (result:any,map:boolean) => {
   console.log(result);
   if(map) {
-    const formattedBookings = await result.map((booking) => ({
+    const formattedBookings = await result.map((booking:any) => ({
       _id: booking._id,
       customer: booking?.customer,
       service: booking.serviceId,
