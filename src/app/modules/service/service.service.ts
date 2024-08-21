@@ -7,29 +7,31 @@ const Createservice = async (service: Service) => {
   return result;
 };
 const getAllServices = async () => {
-  const result = await ServiceModel.find().select({
-    password: 0,
-  });
+  const result = await ServiceModel.find( { isDeleted: false });
   return result;
 };
 
-const getSingleService = async (ServiceId: string) => {
+const getSingleService = async (ServiceId: string,isDeleted:boolean) => {
   const result = await ServiceModel.findOne({
     _id: ServiceId,
-    isDeleted: false,
+    isDeleted: isDeleted,
   })
   return result;
 };
 
-const deleteSingleService = async (ServiceId: number) => {
-  const result = await ServiceModel.updateOne({ ServiceId }, { isDeleted: true });
+const deleteSingleService = async (ServiceId: string) => {
+  const result = await ServiceModel.updateOne(
+    { _id: ServiceId },
+    { isDeleted: true }
+  );
   return result;
 };
 
 const updateSingleService = async (ServiceId: string, Service: Service) => {
-  console.log('updateSingleService');
-  const ServiceData = Service;
-  const result = await ServiceModel.updateOne({ ServiceId }, Service);
+
+  const result = await ServiceModel.findOneAndUpdate({ServiceId }, Service,{
+    new: true
+  });
   return result;
 };
 

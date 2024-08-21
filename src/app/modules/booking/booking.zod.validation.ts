@@ -9,11 +9,11 @@ const bookingVaildationSchema = z.object({
     required_error: "Vehicle Model is required",
     invalid_type_error: "Vehicle Model must be a string",
   }),
-  manufacturingYear: z.string({
+  manufacturingYear: z.number({
     required_error: "Manufacturing Year is required",
     invalid_type_error: "Manufacturing Year must be a string",
   }),
-  registrationPlate: z.number({
+  registrationPlate: z.string({
     required_error: "Registration Plate is required",
     invalid_type_error: "Registration Plate must be a number",
   }),

@@ -45,7 +45,7 @@ const getSingleService = async (req: Request, res: Response, next: NextFunction)
     const ServiceId = req.params.ServiceId;
     console.log('ServiceId ',ServiceId);
     //Calling getSingleService Service
-    const result = await ServiceServices.getSingleService(ServiceId);
+    const result = await ServiceServices.getSingleService(ServiceId,false);
 
     //send response
     sendResponse(res, {
@@ -61,11 +61,13 @@ const getSingleService = async (req: Request, res: Response, next: NextFunction)
 
 const deleteSingleService = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const ServiceId = parseInt(req.params.ServiceId);
+    const ServiceId = req.params.ServiceId;
 
-    //Calling getSingleService Service
-    const result = await ServiceServices.deleteSingleService(ServiceId);
+    //soft delete
+    const softDeleteService = await ServiceServices.deleteSingleService(ServiceId);
 
+    // getSingleService Service
+    const result = await ServiceServices.getSingleService(ServiceId,true);
     //send response
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -81,26 +83,19 @@ const deleteSingleService = async (req: Request, res: Response, next: NextFuncti
 const updateService = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const Service = req.body;
-    //Service vaildation using Zod
+
     const ServiceId = req.params.ServiceId;
 
-    console.log('Service',Service);
-    const zodParseData = ServiceVaildationSchema.parse(Service);
-    console.log('updat data',zodParseData);
-    //Calling CreateService Service
     const result = await ServiceServices.updateSingleService(
-      zodParseData?.ServiceId,
-      zodParseData
+      Service?.ServiceId,
+      Service
     );
-
-    //Get a Service data
-    const ServiceResult = await ServiceServices.getSingleService(ServiceId);
     //send response
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: 'Service updated successfully',
-      data: ServiceResult,
+      data: result,
     });
   } catch (error) {
     next(error)

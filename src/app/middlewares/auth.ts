@@ -7,8 +7,11 @@ import config from '../config';
 import { TUserRole } from '../modules/user/user.interface';
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
-
+    let token = req.headers.authorization as string;
+    if(token){
+      token = token.replace(/^Bearer\s+/, "");
+    }
+    
     // checking if the token is missing
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
@@ -18,7 +21,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
       if(err){
         throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
       }
-      const { role, userEmail } = decoded as JwtPayload;
+      const { role } = decoded as JwtPayload;
       if (requiredRoles && !requiredRoles.includes(role)) {
         throw new AppError(
           httpStatus.UNAUTHORIZED,

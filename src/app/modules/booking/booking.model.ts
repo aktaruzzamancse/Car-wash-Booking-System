@@ -32,12 +32,12 @@ const bookingSchema = new Schema<Booking>({
     required: [true, "Vehicle Model is required"],
   },
   manufacturingYear: {
-    type: String,
+    type: Number,
     trim: true,
     required: [true, "Manufacturing Year is required"],
   },
   registrationPlate: {
-    type: Number,
+    type: String,
     trim: true,
     unique: true,
     required: [true, "Registration Plate is required"],

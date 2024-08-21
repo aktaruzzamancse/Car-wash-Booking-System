@@ -8,15 +8,17 @@ const userSchema = new Schema<User>({
     type: String,
     required: [true, "FullName is required"],
   },
-  password: {
-    type: String,
-    trim: true,
-    required: [true, "Password is required"],
-  },
   email: {
     type: String,
     trim: true,
+    unique: true,
     required: [true, "Email is required"],
+  },
+  password: {
+    type: String,
+    trim: true,
+    select:0,
+    required: [true, "Password is required"],
   },
   phone: {
     type: String,
@@ -33,6 +35,7 @@ const userSchema = new Schema<User>({
   isDeleted: {
     type: Boolean,
     default: false,
+    select:0,
   },
 },{ timestamps: true });
 

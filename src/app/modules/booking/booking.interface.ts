@@ -7,7 +7,7 @@ export type Booking = {
   vehicleType: 'car' | 'truck' | 'SUV' | 'van' | 'motorcycle' | 'bus' | 'electricVehicle' | 'hybridVehicle' | 'bicycle' | 'tractor';
   vehicleBrand: string;
   vehicleModel: string;
-  manufacturingYear: string;
-  registrationPlate: number;
+  manufacturingYear: number;
+  registrationPlate: string;
   isDeleted: boolean;
 };
