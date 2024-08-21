@@ -3,8 +3,9 @@ import { Slot } from "./slot.interface";
 
 const slotSchema = new Schema<Slot>({
   service: {
-    type: String,
-    required: [true, "Service Id is required"],
+    type: Schema.Types.ObjectId,
+    required: [true, 'service id is required'],
+    ref: 'Service',
   },
   date: {
     type: String,

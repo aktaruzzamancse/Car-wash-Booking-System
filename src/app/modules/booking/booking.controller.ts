@@ -7,7 +7,7 @@ import httpStatus from 'http-status';
 const createBooking = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const Booking = req.body;
-    const customerId = '66c00393b64e8da9e1b86449';
+    const customerId = req.user.userId;
     //Service vaildation using Zod
      const zodParseData = BookingVaildationSchema.parse(Booking);
      zodParseData.customer = customerId;
@@ -46,7 +46,7 @@ const getAllBookings = async (req: Request, res: Response, next: NextFunction) =
 const getSingleBooking = async (req: Request, res: Response, next: NextFunction) => {
   try {
     
-    const userId = "66b9b2bf7cc877cb144359fc";
+    const userId = req.user.userId;
     //Calling getSingleService Service
     const result = await BookingService.getSingleBooking(userId);
 

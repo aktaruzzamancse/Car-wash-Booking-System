@@ -1,7 +1,7 @@
-import { Schema, model, connect } from "mongoose";
+import { Types } from "mongoose";
 
 export type Slot = {
-  service: string;
+  service: Types.ObjectId;
   date: string;
   startTime: string;
   endTime: string;

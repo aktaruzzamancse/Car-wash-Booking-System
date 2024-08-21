@@ -7,7 +7,7 @@ const router = express.Router();
 
 //BookingCreate Controller func
 
-router.post("/bookings", BookingControllers.createBooking);
+router.post("/bookings",auth(USER_ROLE.user), BookingControllers.createBooking);
 router.get("/bookings",auth(USER_ROLE.admin), BookingControllers.getAllBookings);
 router.get("/my-bookings",auth(USER_ROLE.user), BookingControllers.getSingleBooking);
 export const BookingRouters = router;
