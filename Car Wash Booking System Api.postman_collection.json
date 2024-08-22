@@ -1,0 +1,425 @@
+{
+	"info": {
+		"_postman_id": "81a3967b-398a-4f26-9070-a55e72018e5f",
+		"name": "Car Wash Booking System Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3437092"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Programming Hero\",\n  \"email\": \"web6@programming-hero.com\",\n  \"password\": \"ph-password\",\n  \"phone\": \"1234567890\",\n  \"role\": \"admin\", //role can be user or admin\n  \"address\": \"123 Main Street, City, Country\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"web@programming-hero.com\",\n    \"password\": \"ph-password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Service",
+			"item": [
+				{
+					"name": "Get All Services",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MjQxMjIwNTEsImV4cCI6MTcyNDk4NjA1MX0.b5CXntOHAjW30y2aOmPiqzL5Oj-bEr_vAjphNRAhGWc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 11111,\n    \"username\": \"string\",\n    \"password\": \"string\",\n    \"fullName\": {\n        \"firstName\": \"string\",\n        \"lastName\": \"string\"\n    },\n    \"age\": 20,\n    \"email\": \"string\",\n    \"isActive\": true,\n    \"hobbies\": [\n        \"string\",\n        \"string\"\n    ],\n    \"address\": {\n        \"street\": \"string\",\n        \"city\": \"string\",\n        \"country\": \"string\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/services",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Service",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/services/66c6281ad94d11d37ef2281c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"services",
+								"66c6281ad94d11d37ef2281c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Service",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJ1c2VySWQiOiI2NmM1NDk0ZjgyOGZjMWE1ODdmYjhiODkiLCJpYXQiOjE3MjQyMDU4MDUsImV4cCI6MTcyNTA2OTgwNX0.3yaG-w1CGbCj3mjs-NigubW7YFQtybyW4KMy2H2lVmk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Car Wash\",\n    \"description\": \"Professional car washing service\",\n    \"price\": 50,\n    \"duration\": 60, // Duration in minutes\n    \"isDeleted\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/services",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Services",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJ1c2VySWQiOiI2NmM2Mjc0OGQ5NGQxMWQzN2VmMjI4MTciLCJpYXQiOjE3MjQyNjIzNTAsImV4cCI6MTcyNTEyNjM1MH0.iPMFFxiXAn7lEyU48TQ91QxP2SODkPL-XEabenSBDIY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"price\": 300,\n    \"name\": \"Car Wash\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/services/66c6281ad94d11d37ef2281c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"services",
+								"66c6281ad94d11d37ef2281c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Service",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJ1c2VySWQiOiI2NmM1NDk0ZjgyOGZjMWE1ODdmYjhiODkiLCJpYXQiOjE3MjQyMDU4MDUsImV4cCI6MTcyNTA2OTgwNX0.3yaG-w1CGbCj3mjs-NigubW7YFQtybyW4KMy2H2lVmk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/services/66c6288ed94d11d37ef22821",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"services",
+								"66c6288ed94d11d37ef22821"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Slot",
+			"item": [
+				{
+					"name": "Create Slot",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJ1c2VySWQiOiI2NmM2Mjc0OGQ5NGQxMWQzN2VmMjI4MTciLCJpYXQiOjE3MjQyNjIzNTAsImV4cCI6MTcyNTEyNjM1MH0.iPMFFxiXAn7lEyU48TQ91QxP2SODkPL-XEabenSBDIY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"service\": \"66c6281ad94d11d37ef2281c\",\n    \"date\": \"2024-08-21\",\n    \"startTime\": \"09:00\",\n    \"endTime\": \"14:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/services/slots",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"services",
+								"slots"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get available slots",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/slots/availability?date=2024-08-21&serviceId=66c54b7f6c3708b7589e1948",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"slots",
+								"availability"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2024-08-21"
+								},
+								{
+									"key": "serviceId",
+									"value": "66c54b7f6c3708b7589e1948"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Book a Service",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJha3RhckBwcm9ncmFtbWluZy1oZXJvLmNvbSIsInJvbGUiOiJ1c2VyIiwidXNlcklkIjoiNjZjNjI3N2NkOTRkMTFkMzdlZjIyODE5IiwiaWF0IjoxNzI0MjYyNjgzLCJleHAiOjE3MjUxMjY2ODN9.HTRgjN6mj7_-ctCtECo3ySXYeJDSmAnQCqqC9BU-oac",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"serviceId\": \"66c6281ad94d11d37ef2281c\",\n    \"slotId\": \"66c628dcd94d11d37ef22827\",\n    \"vehicleType\": \"motorcycle\",\n    \"vehicleBrand\": \"Hero Honda\",\n    \"vehicleModel\": \"Galymar\",\n    \"manufacturingYear\": 2021,\n    \"registrationPlate\": \"ABC123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/bookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Bookings",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJ3ZWJAcHJvZ3JhbW1pbmctaGVyby5jb20iLCJyb2xlIjoiYWRtaW4iLCJ1c2VySWQiOiI2NmM1NDk0ZjgyOGZjMWE1ODdmYjhiODkiLCJpYXQiOjE3MjQyMjE4NjgsImV4cCI6MTcyNTA4NTg2OH0.JhYw__IBvBJVC54yWkRU6ATnzS-FVZgyB76qB4AWrlI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/bookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User's Bookings",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJha3RhckBwcm9ncmFtbWluZy1oZXJvLmNvbSIsInJvbGUiOiJ1c2VyIiwidXNlcklkIjoiNjZjNTQ5NTg4MjhmYzFhNTg3ZmI4YjhiIiwiaWF0IjoxNzI0MjIxNDQzLCJleHAiOjE3MjUwODU0NDN9.whY2fgmg6ulPxtRsxu3al9Rw6oauvetWaOZ-Zemqrwg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/my-bookings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"my-bookings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
