@@ -6,7 +6,7 @@ Live URL: https://car-wash-booking-system-lime.vercel.app
 
 User Registration and Login:
 
-Existing users can login with their password, email.
+Existing users can login with their password, email and generate token.
 
 Users can select their preferred date, time, and type of car wash service.
 Bookings are saved in the database for easy management.
@@ -14,7 +14,7 @@ Service Management:
 
 Admins can add, update, or remove services.
 Admins can view all bookings and manage them efficiently.
-Users can update their personal information and manage their profile.
+Users can manage their profile.
 
 ## Technologies Used
 
